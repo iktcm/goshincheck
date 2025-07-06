@@ -2,93 +2,115 @@
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
-  <title>五神診断結果｜京都 楽楽堂</title>
+  <title>五神診断｜京都 楽楽堂</title>
   <style>
     body {
       font-family: "Noto Serif JP", serif;
-      background-color: #f9f7f3;
+      background-color: #f6f2eb;
       margin: 0;
-      padding: 0;
+      padding: 2rem;
     }
-
     .wrapper {
       max-width: 800px;
-      margin: 5rem auto;
+      margin: auto;
       padding: 2rem;
-      background: #fffefc;
+      background: #fff;
       border-radius: 10px;
       box-shadow: 0 0 15px rgba(0,0,0,0.1);
     }
-
     h1 {
       text-align: center;
-      margin-bottom: 2rem;
       color: #5c4430;
+      margin-bottom: 2rem;
     }
-
-    .result {
-      margin-bottom: 2.5rem;
-      padding: 1.5rem;
-      border: 2px solid #ddd1c4;
-      border-radius: 8px;
-      background-color: #fefaf5;
+    .question {
+      margin-bottom: 1.5rem;
     }
-
-    .result h2 {
-      color: #006666;
-    }
-
-    .link {
-      display: inline-block;
-      margin-top: 1rem;
-      padding: 0.6rem 1.2rem;
-      background-color: #8f6d54;
-      color: white;
-      text-decoration: none;
-      border-radius: 6px;
+    .question p {
       font-weight: bold;
     }
-
-    .link:hover {
+    button {
+      margin-top: 2rem;
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+      padding: 1rem 2rem;
+      font-size: 1rem;
+      background-color: #8f6d54;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+    button:hover {
       background-color: #a67b5b;
     }
-
   </style>
 </head>
 <body>
   <div class="wrapper">
-    <h1>五神診断の結果</h1>
-
-    <div class="result">
-      <h2>あなたの今の状態に近いのは「神（シン）」タイプです</h2>
-      <p>心神のエネルギーが乱れている可能性があります。焦り、不眠、落ち着かない感じはありませんか？</p>
-      <a class="link" href="https://www.kyotorakurakudo.com/p/00011" target="_blank">▶ 神（シン）タイプの方はこちら</a>
-    </div>
-
-    <div class="result">
-      <h2>または「魂（コン）」タイプかもしれません</h2>
-      <p>肝の気が乱れて情緒の波が大きくなっている傾向があります。イライラや不安定さを感じやすい時期です。</p>
-      <a class="link" href="https://www.kyotorakurakudo.com/p/00012" target="_blank">▶ 魂（コン）タイプの方はこちら</a>
-    </div>
-
-    <div class="result">
-      <h2>あるいは「魄（ハク）」タイプの傾向も見られます</h2>
-      <p>肺のエネルギーが低下して、無気力、疲労感、皮膚の不調などを感じやすくなっていませんか？</p>
-      <a class="link" href="https://www.kyotorakurakudo.com/p/00013" target="_blank">▶ 魄（ハク）タイプの方はこちら</a>
-    </div>
-
-    <div class="result">
-      <h2>さらに「意（イ）」タイプの可能性も</h2>
-      <p>脾の弱りによって思考過多や集中力低下、消化機能の乱れなどが生じやすくなっています。</p>
-      <a class="link" href="https://www.kyotorakurakudo.com/p/00014" target="_blank">▶ 意（イ）タイプの方はこちら</a>
-    </div>
-
-    <div class="result">
-      <h2>「志（シ）」タイプにもご注意を</h2>
-      <p>腎の弱りが志を持つ力を低下させ、疲れやすくやる気が出ない状態になっている可能性があります。</p>
-      <a class="link" href="https://www.kyotorakurakudo.com/p/00015" target="_blank">▶ 志（シ）タイプの方はこちら</a>
-    </div>
-
+    <h1>五神診断</h1>
+    <form id="diagnosisForm">
+      <!-- 質問（神） -->
+      <div class="question"><p>1. 最近、心が落ち着かずそわそわしやすい。</p>
+        <label><input type="radio" name="q1" value="shin"> はい</label>
+        <label><input type="radio" name="q1" value=""> いいえ</label>
+      </div>
+      <div class="question"><p>2. よく夢を見たり、眠りが浅いと感じる。</p>
+        <label><input type="radio" name="q2" value="shin"> はい</label>
+        <label><input type="radio" name="q2" value=""> いいえ</label>
+      </div>
+      <!-- 質問（魂） -->
+      <div class="question"><p>3. イライラしやすく感情の波が大きい。</p>
+        <label><input type="radio" name="q3" value="kon"> はい</label>
+        <label><input type="radio" name="q3" value=""> いいえ</label>
+      </div>
+      <div class="question"><p>4. 考えすぎて不安になりやすい。</p>
+        <label><input type="radio" name="q4" value="kon"> はい</label>
+        <label><input type="radio" name="q4" value=""> いいえ</label>
+      </div>
+      <!-- 質問（魄） -->
+      <div class="question"><p>5. 最近やる気が出ない、疲れやすい。</p>
+        <label><input type="radio" name="q5" value="haku"> はい</label>
+        <label><input type="radio" name="q5" value=""> いいえ</label>
+      </div>
+      <div class="question"><p>6. 呼吸が浅い、ため息が多いと感じる。</p>
+        <label><input type="radio" name="q6" value="haku"> はい</label>
+        <label><input type="radio" name="q6" value=""> いいえ</label>
+      </div>
+      <!-- 質問（意） -->
+      <div class="question"><p>7. 集中力が続かずぼーっとしやすい。</p>
+        <label><input type="radio" name="q7" value="i"> はい</label>
+        <label><input type="radio" name="q7" value=""> いいえ</label>
+      </div>
+      <div class="question"><p>8. 食欲が不安定で、消化不良を感じやすい。</p>
+        <label><input type="radio" name="q8" value="i"> はい</label>
+        <label><input type="radio" name="q8" value=""> いいえ</label>
+      </div>
+      <!-- 質問（志） -->
+      <div class="question"><p>9. やる気が出ず、何事にも無関心になりやすい。</p>
+        <label><input type="radio" name="q9" value="shi"> はい</label>
+        <label><input type="radio" name="q9" value=""> いいえ</label>
+      </div>
+      <div class="question"><p>10. 下半身の冷えや腰痛が気になる。</p>
+        <label><input type="radio" name="q10" value="shi"> はい</label>
+        <label><input type="radio" name="q10" value=""> いいえ</label>
+      </div>
+      <button type="submit">診断する</button>
+    </form>
   </div>
+
+  <script>
+    document.getElementById("diagnosisForm").addEventListener("submit", function(e) {
+      e.preventDefault();
+      const counts = { shin: 0, kon: 0, haku: 0, i: 0, shi: 0 };
+      const answers = document.querySelectorAll("input[type='radio']:checked");
+      answers.forEach(ans => {
+        if (ans.value) counts[ans.value]++;
+      });
+      const sorted = Object.entries(counts).sort((a, b) => b[1] - a[1]);
+      window.location.href = "goshin_result.html";
+    });
+  </script>
 </body>
 </html>
