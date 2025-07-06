@@ -2,7 +2,7 @@
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
-  <title>五神診断｜京都 楽楽堂</title>
+  <title>五神診断結果｜京都 楽楽堂</title>
   <style>
     body {
       font-family: "Noto Serif JP", serif;
@@ -10,7 +10,6 @@
       margin: 0;
       padding: 0;
     }
-
     .wrapper {
       max-width: 800px;
       margin: 5rem auto;
@@ -19,133 +18,88 @@
       border-radius: 10px;
       box-shadow: 0 0 15px rgba(0,0,0,0.1);
     }
-
     h1 {
       text-align: center;
       margin-bottom: 2rem;
       color: #5c4430;
     }
-
-    .question {
-      margin-bottom: 1.5rem;
-      padding: 1rem;
-      background: #fefaf5;
-      border: 1px solid #ddd1c4;
+    .result {
+      margin-bottom: 2.5rem;
+      padding: 1.5rem;
+      border: 2px solid #ddd1c4;
       border-radius: 8px;
+      background-color: #fefaf5;
     }
-
-    button {
-      display: block;
-      margin: 2rem auto 0;
-      padding: 0.8rem 2rem;
-      background-color: #006666;
+    .result h2 {
+      color: #006666;
+    }
+    .link {
+      display: inline-block;
+      margin-top: 1rem;
+      padding: 0.6rem 1.2rem;
+      background-color: #8f6d54;
       color: white;
-      border: none;
+      text-decoration: none;
       border-radius: 6px;
-      font-size: 1rem;
-      cursor: pointer;
+      font-weight: bold;
     }
-
-    button:hover {
-      background-color: #009999;
+    .link:hover {
+      background-color: #a67b5b;
     }
   </style>
 </head>
 <body>
   <div class="wrapper">
-    <h1>五神診断</h1>
-    <form id="quizForm">
-      <!-- 質問はJavaScriptで挿入 -->
-    </form>
-    <button onclick="submitQuiz()">診断する</button>
+    <h1>五神診断の結果</h1>
+    <div id="results"></div>
   </div>
 
   <script>
-    const questions = [
-      // 神（心）
-      { text: "最近、眠りが浅く途中で目が覚めることが多い。", type: "神" },
-      { text: "ちょっとしたことで動揺しやすく、心が落ち着かない。", type: "神" },
-      { text: "不安になりやすく、焦りを感じることが多い。", type: "神" },
-      { text: "胸がざわざわするような感覚がある。", type: "神" },
-      { text: "人と会うと極度に緊張してしまう。", type: "神" },
-      { text: "考えがまとまらず、頭が混乱しやすい。", type: "神" },
-      { text: "夢を多く見る・悪夢が多い。", type: "神" },
-      { text: "人に対する恐れや不信感が強くなることがある。", type: "神" },
-      { text: "音や光に過敏になっている気がする。", type: "神" },
-      { text: "急に涙が出る、情緒が安定しない。", type: "神" },
+    const urlParams = new URLSearchParams(window.location.search);
+    const ranks = [urlParams.get("rank1"), urlParams.get("rank2"), urlParams.get("rank3")];
 
-      // 魂（肝）
-      { text: "イライラしやすく怒りっぽい。", type: "魂" },
-      { text: "気分が上下しやすく、情緒が不安定。", type: "魂" },
-      { text: "何かに急かされているような焦燥感がある。", type: "魂" },
-      { text: "急に怒りが爆発することがある。", type: "魂" },
-      { text: "目が疲れやすく、充血しやすい。", type: "魂" },
-      { text: "眠ろうとしても頭がさえて寝つけない。", type: "魂" },
-      { text: "胸脇部（みぞおちの横）が張る感じがある。", type: "魂" },
-      { text: "ふと寂しさや虚しさを強く感じることがある。", type: "魂" },
-      { text: "何かに挑戦したいが、不安で踏み出せない。", type: "魂" },
-      { text: "計画通りに物事が進まないと落ち込む。", type: "魂" },
+    const contents = {
+      神: {
+        title: "あなたの今の状態に近いのは「神（シン）」タイプです",
+        desc: "心神のエネルギーが乱れている可能性があります。焦り、不眠、落ち着かない感じはありませんか？",
+        url: "https://www.kyotorakurakudo.com/p/00003"
+      },
+      魂: {
+        title: "または「魂（コン）」タイプかもしれません",
+        desc: "肝の気が乱れて情緒の波が大きくなっている傾向があります。イライラや不安定さを感じやすい時期です。",
+        url: "https://www.kyotorakurakudo.com/p/00006"
+      },
+      魄: {
+        title: "あるいは「魄（ハク）」タイプの傾向も見られます",
+        desc: "肺のエネルギーが低下して、無気力、疲労感、皮膚の不調などを感じやすくなっていませんか？",
+        url: "https://www.kyotorakurakudo.com/p/00009"
+      },
+      意: {
+        title: "さらに「意（イ）」タイプの可能性も",
+        desc: "脾の弱りによって思考過多や集中力低下、消化機能の乱れなどが生じやすくなっています。",
+        url: "https://www.kyotorakurakudo.com/p/00010"
+      },
+      志: {
+        title: "「志（シ）」タイプにもご注意を",
+        desc: "腎の弱りが志を持つ力を低下させ、疲れやすくやる気が出ない状態になっている可能性があります。",
+        url: "https://www.kyotorakurakudo.com/p/00017"
+      }
+    };
 
-      // 魄（肺）
-      { text: "無気力・無関心になることが増えた。", type: "魄" },
-      { text: "小さなことにくよくよしてしまう。", type: "魄" },
-      { text: "些細なことで落ち込みやすい。", type: "魄" },
-      { text: "ため息が多くなった。", type: "魄" },
-      { text: "喉や鼻が乾燥しやすい。", type: "魄" },
-      { text: "肌荒れが気になる。", type: "魄" },
-      { text: "やる気が出ず、外出も億劫。", type: "魄" },
-      { text: "気を抜くとすぐ泣いてしまいそうになる。", type: "魄" },
-      { text: "夢中になれるものが見つからない。", type: "魄" },
-      { text: "集中力が続かず、すぐ疲れる。", type: "魄" },
+    const container = document.getElementById("results");
 
-      // 意（脾）
-      { text: "考えすぎてしまい、眠れなくなることがある。", type: "意" },
-      { text: "集中力が続かず、物事に身が入らない。", type: "意" },
-      { text: "悩みごとが頭から離れない。", type: "意" },
-      { text: "胃腸が弱く、お腹を下しやすい。", type: "意" },
-      { text: "甘いものや炭水化物がやめられない。", type: "意" },
-      { text: "食後に眠気やだるさを感じる。", type: "意" },
-      { text: "気がつくとぼーっとしている。", type: "意" },
-      { text: "細かいことにこだわってしまう。", type: "意" },
-      { text: "整理整頓が苦手。", type: "意" },
-      { text: "物事を悪い方に考えてしまう。", type: "意" },
-
-      // 志（腎）
-      { text: "やる気が出ない、目標を見失いやすい。", type: "志" },
-      { text: "疲れやすく、回復に時間がかかる。", type: "志" },
-      { text: "腰や膝がだるい・痛むことがある。", type: "志" },
-      { text: "人と関わることが面倒に感じる。", type: "志" },
-      { text: "怖がりになったと感じる。", type: "志" },
-      { text: "寝ても疲れが取れない。", type: "志" },
-      { text: "抜け毛や白髪が気になる。", type: "志" },
-      { text: "耳鳴りや難聴がある。", type: "志" },
-      { text: "性欲の低下を感じる。", type: "志" },
-      { text: "ぼんやりすることが増えた。", type: "志" }
-    ];
-
-    const form = document.getElementById("quizForm");
-    questions.forEach((q, index) => {
-      const div = document.createElement("div");
-      div.className = "question";
-      div.innerHTML = `
-        <p>${index + 1}. ${q.text}</p>
-        <label><input type="radio" name="q${index}" value="${q.type}"> はい</label>
-        <label><input type="radio" name="q${index}" value=""> いいえ</label>
-      `;
-      form.appendChild(div);
+    ranks.forEach(type => {
+      if (contents[type]) {
+        const div = document.createElement("div");
+        div.className = "result";
+        div.innerHTML = `
+          <h2>${contents[type].title}</h2>
+          <p>${contents[type].desc}</p>
+          <a class="link" href="${contents[type].url}" target="_blank">▶ ${type}タイプの方はこちら</a>
+        `;
+        container.appendChild(div);
+      }
     });
-
-    function submitQuiz() {
-      const scores = { "神": 0, "魂": 0, "魄": 0, "意": 0, "志": 0 };
-      const inputs = document.querySelectorAll("input[type=radio]:checked");
-      inputs.forEach(input => {
-        if (input.value) scores[input.value]++;
-      });
-
-      const sorted = Object.entries(scores).sort((a, b) => b[1] - a[1]);
-      const top = sorted[0][0];
-      window.location.href = `goshin_result.html?result=${top}`;
-    }
   </script>
 </body>
 </html>
