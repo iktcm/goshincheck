@@ -1,45 +1,48 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>五神診断｜京都 楽楽堂</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <style>
     body {
       font-family: "Noto Serif JP", serif;
-      background-color: #f6f2eb;
+      background-color: #f9f7f3;
       margin: 0;
-      padding: 2rem;
+      padding: 0;
     }
     .wrapper {
       max-width: 800px;
-      margin: auto;
+      margin: 5rem auto;
       padding: 2rem;
-      background: #fff;
+      background: #fffefc;
       border-radius: 10px;
       box-shadow: 0 0 15px rgba(0,0,0,0.1);
     }
     h1 {
       text-align: center;
-      color: #5c4430;
       margin-bottom: 2rem;
+      color: #5c4430;
     }
     .question {
       margin-bottom: 1.5rem;
     }
     .question p {
+      margin-bottom: 0.5rem;
       font-weight: bold;
     }
+    .question label {
+      margin-right: 1rem;
+    }
     button {
-      margin-top: 2rem;
       display: block;
-      margin-left: auto;
-      margin-right: auto;
+      margin: 2rem auto;
       padding: 1rem 2rem;
-      font-size: 1rem;
       background-color: #8f6d54;
       color: white;
       border: none;
       border-radius: 6px;
+      font-size: 1rem;
       cursor: pointer;
     }
     button:hover {
@@ -50,66 +53,107 @@
 <body>
   <div class="wrapper">
     <h1>五神診断</h1>
-    <form id="diagnosisForm">
-      <!-- 質問（神） -->
-      <div class="question"><p>1. 最近、心が落ち着かずそわそわしやすい。</p>
-        <label><input type="radio" name="q1" value="shin"> はい</label>
-        <label><input type="radio" name="q1" value=""> いいえ</label>
-      </div>
-      <div class="question"><p>2. よく夢を見たり、眠りが浅いと感じる。</p>
-        <label><input type="radio" name="q2" value="shin"> はい</label>
-        <label><input type="radio" name="q2" value=""> いいえ</label>
-      </div>
-      <!-- 質問（魂） -->
-      <div class="question"><p>3. イライラしやすく感情の波が大きい。</p>
-        <label><input type="radio" name="q3" value="kon"> はい</label>
-        <label><input type="radio" name="q3" value=""> いいえ</label>
-      </div>
-      <div class="question"><p>4. 考えすぎて不安になりやすい。</p>
-        <label><input type="radio" name="q4" value="kon"> はい</label>
-        <label><input type="radio" name="q4" value=""> いいえ</label>
-      </div>
-      <!-- 質問（魄） -->
-      <div class="question"><p>5. 最近やる気が出ない、疲れやすい。</p>
-        <label><input type="radio" name="q5" value="haku"> はい</label>
-        <label><input type="radio" name="q5" value=""> いいえ</label>
-      </div>
-      <div class="question"><p>6. 呼吸が浅い、ため息が多いと感じる。</p>
-        <label><input type="radio" name="q6" value="haku"> はい</label>
-        <label><input type="radio" name="q6" value=""> いいえ</label>
-      </div>
-      <!-- 質問（意） -->
-      <div class="question"><p>7. 集中力が続かずぼーっとしやすい。</p>
-        <label><input type="radio" name="q7" value="i"> はい</label>
-        <label><input type="radio" name="q7" value=""> いいえ</label>
-      </div>
-      <div class="question"><p>8. 食欲が不安定で、消化不良を感じやすい。</p>
-        <label><input type="radio" name="q8" value="i"> はい</label>
-        <label><input type="radio" name="q8" value=""> いいえ</label>
-      </div>
-      <!-- 質問（志） -->
-      <div class="question"><p>9. やる気が出ず、何事にも無関心になりやすい。</p>
-        <label><input type="radio" name="q9" value="shi"> はい</label>
-        <label><input type="radio" name="q9" value=""> いいえ</label>
-      </div>
-      <div class="question"><p>10. 下半身の冷えや腰痛が気になる。</p>
-        <label><input type="radio" name="q10" value="shi"> はい</label>
-        <label><input type="radio" name="q10" value=""> いいえ</label>
-      </div>
+    <form id="quizForm">
+      <div id="questions"></div>
       <button type="submit">診断する</button>
     </form>
   </div>
 
   <script>
-    document.getElementById("diagnosisForm").addEventListener("submit", function(e) {
-      e.preventDefault();
-      const counts = { shin: 0, kon: 0, haku: 0, i: 0, shi: 0 };
-      const answers = document.querySelectorAll("input[type='radio']:checked");
-      answers.forEach(ans => {
-        if (ans.value) counts[ans.value]++;
+    const questions = {
+      神: [
+        "最近、寝つきが悪かったり、夜中に目が覚めたりしますか？",
+        "焦りやすく、心が落ち着かないことがありますか？",
+        "人前で緊張しやすいと感じますか？",
+        "よく夢を見たり、眠りが浅いと感じますか？",
+        "些細なことで不安や心配になりやすいですか？",
+        "気を抜くと、ぼんやりしてしまうことが多いですか？",
+        "胸がドキドキしたり、動悸を感じることがありますか？",
+        "集中しようとしても、注意が散漫になりますか？",
+        "ストレスで精神的に疲れを感じることが多いですか？",
+        "驚きやすいと感じることがありますか？"
+      ],
+      魂: [
+        "怒りっぽくなったり、イライラしやすいと感じますか？",
+        "気分の浮き沈みが激しいですか？",
+        "何かを始めてもすぐに飽きてしまうことが多いですか？",
+        "音や光に敏感に反応してしまいますか？",
+        "大きな声や喧騒が苦手ですか？",
+        "言いたいことを我慢してストレスを感じることがありますか？",
+        "人の視線や評価が気になるほうですか？",
+        "無理をしてでも頑張ってしまう傾向がありますか？",
+        "落ち着かず、そわそわしてしまうことがありますか？",
+        "些細なことでも感情的になることがありますか？"
+      ],
+      魄: [
+        "無気力でやる気が出ないと感じることが多いですか？",
+        "気分が沈みがちで憂鬱になることがありますか？",
+        "些細なことが気になって、くよくよしてしまいますか？",
+        "過去のことを思い出して落ち込むことがありますか？",
+        "他人の言動に傷つきやすいと感じますか？",
+        "ため息をつくことが増えましたか？",
+        "涙もろくなったと感じることがありますか？",
+        "皮膚が乾燥しやすい、またはトラブルが多いですか？",
+        "呼吸が浅く、息苦しさを感じることがありますか？",
+        "疲れやすく、風邪をひきやすいと感じますか？"
+      ],
+      意: [
+        "考えすぎて夜眠れなくなることがありますか？",
+        "何事も心配しすぎる傾向がありますか？",
+        "集中力が続かないと感じますか？",
+        "うっかりミスや物忘れが多いですか？",
+        "胃腸の調子が不安定になりやすいですか？",
+        "ストレスがあるとすぐにお腹が張ったり痛くなったりしますか？",
+        "人の話を聞いてもすぐに忘れてしまうことがありますか？",
+        "人に相談するより、自分の中で悩むことが多いですか？",
+        "感情よりも理屈で物事を考えがちですか？",
+        "物事を決断するのに時間がかかるほうですか？"
+      ],
+      志: [
+        "以前より根気ややる気がなくなってきたと感じますか？",
+        "人との関わりが面倒だと感じることがありますか？",
+        "将来への希望や夢が持ちにくくなっていますか？",
+        "不安になるとすぐに疲れて横になりたくなりますか？",
+        "ちょっとしたことで諦めてしまうことが多くなりましたか？",
+        "記憶力や判断力が低下してきたと感じますか？",
+        "睡眠時間は取っていても疲れが取れにくいですか？",
+        "腰や膝がだるくなりやすいですか？",
+        "トイレが近い、または尿量が少ないと感じますか？",
+        "寒さに弱く、冷えやすい体質ですか？"
+      ]
+    };
+
+    const questionsDiv = document.getElementById("questions");
+    let count = 1;
+    for (const key in questions) {
+      questions[key].forEach((q, i) => {
+        const div = document.createElement("div");
+        div.className = "question";
+        div.innerHTML = `
+          <p>Q${count}. ${q}</p>
+          <label><input type="radio" name="${key}_${i}" value="1" required> はい</label>
+          <label><input type="radio" name="${key}_${i}" value="0"> いいえ</label>
+        `;
+        questionsDiv.appendChild(div);
+        count++;
       });
-      const sorted = Object.entries(counts).sort((a, b) => b[1] - a[1]);
-      window.location.href = "goshin_result.html";
+    }
+
+    document.getElementById("quizForm").addEventListener("submit", function(e) {
+      e.preventDefault();
+      const scores = { 神: 0, 魂: 0, 魄: 0, 意: 0, 志: 0 };
+      const formData = new FormData(this);
+      for (let [name, value] of formData.entries()) {
+        const type = name.split("_")[0];
+        scores[type] += parseInt(value);
+      }
+      const sorted = Object.entries(scores).sort((a,b) => b[1] - a[1]);
+      const topThree = sorted.slice(0,3).map(entry => entry[0]);
+      const params = new URLSearchParams();
+      topThree.forEach((type, i) => {
+        params.set(`rank${i+1}`, type);
+      });
+      window.location.href = "goshin_result.html?" + params.toString();
     });
   </script>
 </body>
