@@ -1,64 +1,109 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>五神診断｜京都 楽楽堂</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <style>
     body {
       font-family: "Noto Serif JP", serif;
+      background-image: url("background.jpg");
+      background-size: cover;
+      background-attachment: fixed;
+      background-position: center top;
+      background-repeat: no-repeat;
       background-color: #f6f2eb;
       margin: 0;
-      padding: 2rem;
+      padding: 0;
     }
-    .question {
+
+    .container {
+      max-width: 800px;
+      background-color: rgba(255, 255, 255, 0.95);
+      margin: 4rem auto;
+      padding: 2rem;
+      border-radius: 12px;
+      box-shadow: 0 0 12px rgba(0,0,0,0.1);
+    }
+
+    h1 {
+      text-align: center;
       margin-bottom: 2rem;
     }
-    .button {
-      display: inline-block;
-      margin: 1rem;
-      padding: 0.75rem 2rem;
+
+    .question {
+      margin-bottom: 1.5rem;
+    }
+
+    button {
+      display: block;
+      margin: 2rem auto 0;
+      padding: 1rem 2rem;
+      font-size: 1rem;
       background-color: #006666;
       color: white;
-      border-radius: 6px;
-      text-decoration: none;
-      font-size: 1rem;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #009999;
+    }
+
+    .result {
+      margin-top: 2rem;
+      padding: 1rem;
+      background-color: #eef;
+      border-radius: 8px;
+      font-size: 1.1rem;
     }
   </style>
 </head>
 <body>
-  <h1>五神診断チェック</h1>
+  <div class="container">
+    <h1>五神診断フォーム</h1>
 
-  <div class="question">
-    <p>① 眠りが浅く、夢をよく見る</p>
-    <button class="button">はい</button>
-    <button class="button">いいえ</button>
+    <form id="goshinForm">
+      <div class="question">
+        <p>① 最近、眠りが浅く夢をよく見ますか？</p>
+        <label><input type="radio" name="q1" value="1" required> はい</label>
+        <label><input type="radio" name="q1" value="0"> いいえ</label>
+      </div>
+      <div class="question">
+        <p>② 急に不安になったり、動悸を感じることがありますか？</p>
+        <label><input type="radio" name="q2" value="1" required> はい</label>
+        <label><input type="radio" name="q2" value="0"> いいえ</label>
+      </div>
+      <!-- 質問はあと8個ほど追加予定 -->
+
+      <button type="submit">診断結果を見る</button>
+    </form>
+
+    <div id="result" class="result" style="display:none;"></div>
   </div>
 
-  <div class="question">
-    <p>② 物忘れが多くなった</p>
-    <button class="button">はい</button>
-    <button class="button">いいえ</button>
-  </div>
+  <script>
+    document.getElementById("goshinForm").addEventListener("submit", function(e) {
+      e.preventDefault();
 
-  <div class="question">
-    <p>③ 落ち着かずイライラしやすい</p>
-    <button class="button">はい</button>
-    <button class="button">いいえ</button>
-  </div>
+      let score = 0;
+      for (let i = 1; i <= 2; i++) {
+        const q = document.querySelector('input[name="q' + i + '"]:checked');
+        if (q) score += parseInt(q.value);
+      }
 
-  <div class="question">
-    <p>④ 不安感がある</p>
-    <button class="button">はい</button>
-    <button class="button">いいえ</button>
-  </div>
+      let resultText = "";
+      if (score >= 2) {
+        resultText = "あなたは「神（シン）」タイプが弱っているかもしれません。心身のリラックスと睡眠の質を大切にしましょう。";
+      } else {
+        resultText = "今のところ、五神のバランスは比較的整っているようです。";
+      }
 
-  <div class="question">
-    <p>⑤ 胸がドキドキしやすい</p>
-    <button class="button">はい</button>
-    <button class="button">いいえ</button>
-  </div>
-
-  <!-- 本来はスコア計算などを入れますが、まずは表示確認用です -->
+      const resultBox = document.getElementById("result");
+      resultBox.innerHTML = resultText;
+      resultBox.style.display = "block";
+    });
+  </script>
 </body>
 </html>
-
