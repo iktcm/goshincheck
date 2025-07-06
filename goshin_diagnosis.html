@@ -1,109 +1,94 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-  <meta charset="UTF-8" />
-  <title>五神診断｜京都 楽楽堂</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <title>五神診断結果｜京都 楽楽堂</title>
   <style>
     body {
       font-family: "Noto Serif JP", serif;
-      background-image: url("background.jpg");
-      background-size: cover;
-      background-attachment: fixed;
-      background-position: center top;
-      background-repeat: no-repeat;
-      background-color: #f6f2eb;
+      background-color: #f9f7f3;
       margin: 0;
       padding: 0;
     }
 
-    .container {
+    .wrapper {
       max-width: 800px;
-      background-color: rgba(255, 255, 255, 0.95);
-      margin: 4rem auto;
+      margin: 5rem auto;
       padding: 2rem;
-      border-radius: 12px;
-      box-shadow: 0 0 12px rgba(0,0,0,0.1);
+      background: #fffefc;
+      border-radius: 10px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.1);
     }
 
     h1 {
       text-align: center;
       margin-bottom: 2rem;
-    }
-
-    .question {
-      margin-bottom: 1.5rem;
-    }
-
-    button {
-      display: block;
-      margin: 2rem auto 0;
-      padding: 1rem 2rem;
-      font-size: 1rem;
-      background-color: #006666;
-      color: white;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-    }
-
-    button:hover {
-      background-color: #009999;
+      color: #5c4430;
     }
 
     .result {
-      margin-top: 2rem;
-      padding: 1rem;
-      background-color: #eef;
+      margin-bottom: 2.5rem;
+      padding: 1.5rem;
+      border: 2px solid #ddd1c4;
       border-radius: 8px;
-      font-size: 1.1rem;
+      background-color: #fefaf5;
     }
+
+    .result h2 {
+      color: #006666;
+    }
+
+    .link {
+      display: inline-block;
+      margin-top: 1rem;
+      padding: 0.6rem 1.2rem;
+      background-color: #8f6d54;
+      color: white;
+      text-decoration: none;
+      border-radius: 6px;
+      font-weight: bold;
+    }
+
+    .link:hover {
+      background-color: #a67b5b;
+    }
+
   </style>
 </head>
 <body>
-  <div class="container">
-    <h1>五神診断フォーム</h1>
+  <div class="wrapper">
+    <h1>五神診断の結果</h1>
 
-    <form id="goshinForm">
-      <div class="question">
-        <p>① 最近、眠りが浅く夢をよく見ますか？</p>
-        <label><input type="radio" name="q1" value="1" required> はい</label>
-        <label><input type="radio" name="q1" value="0"> いいえ</label>
-      </div>
-      <div class="question">
-        <p>② 急に不安になったり、動悸を感じることがありますか？</p>
-        <label><input type="radio" name="q2" value="1" required> はい</label>
-        <label><input type="radio" name="q2" value="0"> いいえ</label>
-      </div>
-      <!-- 質問はあと8個ほど追加予定 -->
+    <div class="result">
+      <h2>あなたの今の状態に近いのは「神（シン）」タイプです</h2>
+      <p>心神のエネルギーが乱れている可能性があります。焦り、不眠、落ち着かない感じはありませんか？</p>
+      <a class="link" href="https://www.kyotorakurakudo.com/p/00011" target="_blank">▶ 神（シン）タイプの方はこちら</a>
+    </div>
 
-      <button type="submit">診断結果を見る</button>
-    </form>
+    <div class="result">
+      <h2>または「魂（コン）」タイプかもしれません</h2>
+      <p>肝の気が乱れて情緒の波が大きくなっている傾向があります。イライラや不安定さを感じやすい時期です。</p>
+      <a class="link" href="https://www.kyotorakurakudo.com/p/00012" target="_blank">▶ 魂（コン）タイプの方はこちら</a>
+    </div>
 
-    <div id="result" class="result" style="display:none;"></div>
+    <div class="result">
+      <h2>あるいは「魄（ハク）」タイプの傾向も見られます</h2>
+      <p>肺のエネルギーが低下して、無気力、疲労感、皮膚の不調などを感じやすくなっていませんか？</p>
+      <a class="link" href="https://www.kyotorakurakudo.com/p/00013" target="_blank">▶ 魄（ハク）タイプの方はこちら</a>
+    </div>
+
+    <div class="result">
+      <h2>さらに「意（イ）」タイプの可能性も</h2>
+      <p>脾の弱りによって思考過多や集中力低下、消化機能の乱れなどが生じやすくなっています。</p>
+      <a class="link" href="https://www.kyotorakurakudo.com/p/00014" target="_blank">▶ 意（イ）タイプの方はこちら</a>
+    </div>
+
+    <div class="result">
+      <h2>「志（シ）」タイプにもご注意を</h2>
+      <p>腎の弱りが志を持つ力を低下させ、疲れやすくやる気が出ない状態になっている可能性があります。</p>
+      <a class="link" href="https://www.kyotorakurakudo.com/p/00015" target="_blank">▶ 志（シ）タイプの方はこちら</a>
+    </div>
+
   </div>
-
-  <script>
-    document.getElementById("goshinForm").addEventListener("submit", function(e) {
-      e.preventDefault();
-
-      let score = 0;
-      for (let i = 1; i <= 2; i++) {
-        const q = document.querySelector('input[name="q' + i + '"]:checked');
-        if (q) score += parseInt(q.value);
-      }
-
-      let resultText = "";
-      if (score >= 2) {
-        resultText = "あなたは「神（シン）」タイプが弱っているかもしれません。心身のリラックスと睡眠の質を大切にしましょう。";
-      } else {
-        resultText = "今のところ、五神のバランスは比較的整っているようです。";
-      }
-
-      const resultBox = document.getElementById("result");
-      resultBox.innerHTML = resultText;
-      resultBox.style.display = "block";
-    });
-  </script>
 </body>
 </html>
